@@ -119,6 +119,9 @@ assignment/
 ├── package.json
 └── README.md
 
+<img width="545" height="825" alt="image" src="https://github.com/user-attachments/assets/e2739901-897b-4c4e-94a1-a529e2784158" />
+
+
 Installation & Setup
 
 Clone the repository
