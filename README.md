@@ -1,60 +1,92 @@
-# Social Media Application
+Social Media Backend
 
 A complete social media backend application built with Node.js, Express, MongoDB, and JWT authentication.
+It supports user interactions, role-based access, activity tracking, and admin/owner management.
 
-## Features
+Features
+👤 User Management
 
-### User Management
-- ✅ User signup and login with JWT authentication
-- ✅ User profile creation and updates
-- ✅ Role-based access control (User, Admin, Owner)
+User signup and login with JWT authentication
 
-### Social Features
-- ✅ Create, read, update, and delete posts
-- ✅ Like and unlike posts
-- ✅ Follow and unfollow users
-- ✅ Block and unblock users
-- ✅ User feed (posts from non-blocked users)
+User profile creation and updates
 
-### Activity Wall
-- ✅ Track all user activities
-- ✅ Display activities such as:
-  - User made a post
-  - User followed another user
-  - User liked a post
-  - User deleted by Admin/Owner
-  - Post deleted by Admin/Owner
+Role-based access control:
 
-### Admin Features
-- ✅ Delete user profiles
-- ✅ Delete posts
-- ✅ Remove likes from posts
-- ✅ View all users and posts (including deleted)
+user
 
-### Owner Features
-- ✅ All admin capabilities
-- ✅ Create new admins
-- ✅ Remove admin privileges
-- ✅ View all admins
+admin
 
-## Technology Stack
+owner
 
-- **Runtime:** Node.js
-- **Framework:** Express.js
-- **Database:** MongoDB with Mongoose ODM
-- **Authentication:** JWT (JSON Web Tokens)
-- **Password Hashing:** bcryptjs
-- **Environment Variables:** dotenv
-- **Process Manager:** Nodemon (development)
-- **Package Manager:** Yarn
+🌐 Social Features
 
-## Project Structure
+Create, read, update, and delete posts
 
-```
-assigment/
+Like and unlike posts
+
+Follow and unfollow users
+
+Block and unblock users
+
+User feed showing posts from non-blocked users
+
+📜 Activity Wall
+
+Tracks important actions such as:
+
+User created a post
+
+User followed another user
+
+User liked a post
+
+User deleted by Admin/Owner
+
+Post deleted by Admin/Owner
+
+🛠 Admin Features
+
+Delete user profiles (soft delete)
+
+Delete posts (soft delete)
+
+Remove likes from posts
+
+View all users (including inactive) and all posts (including deleted)
+
+👑 Owner Features
+
+All admin capabilities
+
+Create new admins
+
+Remove admin privileges
+
+View all admins
+
+Tech Stack
+
+Runtime: Node.js
+
+Framework: Express.js
+
+Database: MongoDB (Mongoose ODM)
+
+Authentication: JWT (JSON Web Tokens)
+
+Password Hashing: bcryptjs
+
+Environment Management: dotenv
+
+Dev Tooling: Nodemon
+
+Package Manager: Yarn
+
+Project Structure
+assignment/
 ├── src/
 │   ├── config/
-│   │   └── database.js         # Database connection
+│   │   └── database.js          # Database connection
 │   ├── controllers/
 │   │   ├── activityController.js
 │   │   ├── adminController.js
@@ -63,13 +95,13 @@ assigment/
 │   │   ├── postController.js
 │   │   └── userController.js
 │   ├── middleware/
-│   │   ├── auth.js             # JWT authentication & authorization
-│   │   └── error.js            # Error handling
+│   │   ├── auth.js              # JWT auth & role-based authorization
+│   │   └── error.js             # Global error handling
 │   ├── models/
-│   │   ├── Activity.js         # Activity schema
-│   │   ├── Post.js             # Post schema
-│   │   ├── User.js             # User schema
-│   │   └── index.js            # Models export
+│   │   ├── Activity.js          # Activity schema
+│   │   ├── Post.js              # Post schema
+│   │   ├── User.js              # User schema
+│   │   └── index.js             # Models export
 │   ├── routes/
 │   │   ├── activities.js
 │   │   ├── admin.js
@@ -78,114 +110,154 @@ assigment/
 │   │   ├── posts.js
 │   │   └── users.js
 │   ├── utils/
-│   │   ├── activityLogger.js   # Activity logging utility
-│   │   └── auth.js             # Auth utility functions
-│   └── server.js               # Main application file
-├── .env.example                # Environment variables template
+│   │   ├── activityLogger.js    # Activity logging helper
+│   │   └── auth.js              # Auth utility functions (token, etc.)
+│   └── server.js                # Application entry point
+├── .env.example                 # Environment variables template
 ├── .gitignore
 ├── nodemon.json
 ├── package.json
 └── README.md
-```
 
-## Installation
+Installation & Setup
 
-1. **Clone the repository**
-   ```bash
-   cd assigment
-   ```
+Clone the repository
 
-2. **Install dependencies using Yarn**
-   ```bash
-   yarn install
-   ```
+git clone <repo-url>
+cd assignment
 
-3. **Create environment file**
-   ```bash
-   copy .env.example .env
-   ```
 
-4. **Configure environment variables**
-   Edit `.env` file and update the following:
-   - `MONGODB_URI`: Your MongoDB connection string
-   - `JWT_SECRET`: A strong secret key for JWT
-   - `PORT`: Server port (default: 5000)
+Install dependencies
 
-5. **Start MongoDB**
-   Make sure MongoDB is running on your system or use MongoDB Atlas
+yarn install
 
-6. **Run the application**
-   
-   Development mode with Nodemon:
-   ```bash
-   yarn dev
-   ```
-   
-   Production mode:
-   ```bash
-   yarn start
-   ```
 
-## API Endpoints
+Create environment file
 
-### Authentication Routes (`/api/auth`)
-- `POST /api/auth/signup` - Register a new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/me` - Get current user profile
+cp .env.example .env
 
-### User Routes (`/api/users`)
-- `GET /api/users` - Get all users
-- `GET /api/users/:id` - Get user profile by ID
-- `PUT /api/users/profile` - Update own profile
-- `POST /api/users/:id/follow` - Follow a user
-- `DELETE /api/users/:id/unfollow` - Unfollow a user
-- `POST /api/users/:id/block` - Block a user
-- `DELETE /api/users/:id/unblock` - Unblock a user
 
-### Post Routes (`/api/posts`)
-- `GET /api/posts` - Get all posts (feed)
-- `POST /api/posts` - Create a new post
-- `GET /api/posts/:id` - Get single post
-- `PUT /api/posts/:id` - Update own post
-- `DELETE /api/posts/:id` - Delete own post
-- `GET /api/posts/user/:userId` - Get user's posts
-- `POST /api/posts/:id/like` - Like a post
-- `DELETE /api/posts/:id/unlike` - Unlike a post
+Configure environment variables
 
-### Activity Routes (`/api/activities`)
-- `GET /api/activities` - Get activity wall (paginated)
-- `GET /api/activities/user/:userId` - Get user's activities
+In .env:
 
-### Admin Routes (`/api/admin`)
-*Requires Admin or Owner role*
-- `GET /api/admin/users` - Get all users (including inactive)
-- `DELETE /api/admin/users/:id` - Delete user
-- `GET /api/admin/posts` - Get all posts (including deleted)
-- `DELETE /api/admin/posts/:id` - Delete post
-- `DELETE /api/admin/posts/:postId/likes/:userId` - Remove like
+PORT=5000
+NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017/social-media-app
+JWT_SECRET=your_secret_key
+JWT_EXPIRE=7d
 
-### Owner Routes (`/api/owner`)
-*Requires Owner role*
-- `GET /api/owner/admins` - Get all admins
-- `POST /api/owner/admins` - Create admin (body: { userId })
-- `DELETE /api/owner/admins/:id` - Remove admin
 
-## Request/Response Examples
+Ensure MongoDB is running
 
-### Signup
-**Request:**
-```json
+Either locally, or
+
+Use MongoDB Atlas and update MONGODB_URI.
+
+Run the application
+
+Development (with Nodemon):
+
+yarn dev
+
+
+Production:
+
+yarn start
+
+API Endpoints
+🔐 Auth Routes (/api/auth)
+
+POST /api/auth/signup – Register a new user
+
+POST /api/auth/login – Login user
+
+GET /api/auth/me – Get current logged-in user profile
+
+👤 User Routes (/api/users)
+
+GET /api/users – Get all users
+
+GET /api/users/:id – Get user profile by ID
+
+PUT /api/users/profile – Update own profile
+
+POST /api/users/:id/follow – Follow a user
+
+DELETE /api/users/:id/unfollow – Unfollow a user
+
+POST /api/users/:id/block – Block a user
+
+DELETE /api/users/:id/unblock – Unblock a user
+
+📝 Post Routes (/api/posts)
+
+GET /api/posts – Get all posts (feed)
+
+POST /api/posts – Create a new post
+
+GET /api/posts/:id – Get a single post
+
+PUT /api/posts/:id – Update own post
+
+DELETE /api/posts/:id – Delete own post
+
+GET /api/posts/user/:userId – Get posts by a specific user
+
+POST /api/posts/:id/like – Like a post
+
+DELETE /api/posts/:id/unlike – Unlike a post
+
+📊 Activity Routes (/api/activities)
+
+GET /api/activities – Get activity wall (paginated)
+
+GET /api/activities/user/:userId – Get activities of a specific user
+
+🛡 Admin Routes (/api/admin)
+
+Requires admin or owner role
+
+GET /api/admin/users – Get all users (including inactive)
+
+DELETE /api/admin/users/:id – Soft delete a user
+
+GET /api/admin/posts – Get all posts (including deleted)
+
+DELETE /api/admin/posts/:id – Soft delete a post
+
+DELETE /api/admin/posts/:postId/likes/:userId – Remove a like from a post
+
+👑 Owner Routes (/api/owner)
+
+Requires owner role
+
+GET /api/owner/admins – Get all admins
+
+POST /api/owner/admins – Promote a user to admin
+
+Body: { "userId": "<userId>" }
+
+DELETE /api/owner/admins/:id – Remove admin privileges from a user
+
+Request / Response Examples
+🔐 Signup
+
+Request
+
 POST /api/auth/signup
+Content-Type: application/json
+
 {
   "username": "johndoe",
   "email": "john@example.com",
   "password": "password123",
   "bio": "Hello, I'm John!"
 }
-```
 
-**Response:**
-```json
+
+Response
+
 {
   "success": true,
   "token": "jwt_token_here",
@@ -194,24 +266,27 @@ POST /api/auth/signup
     "username": "johndoe",
     "email": "john@example.com",
     "role": "user",
-    "bio": "Hello, I'm John!"
+    "bio": "Hello, I'm John!",
+    "profilePicture": ""
   }
 }
-```
 
-### Create Post
-**Request:**
-```json
+📝 Create Post
+
+Request
+
 POST /api/posts
 Authorization: Bearer <token>
+Content-Type: application/json
+
 {
   "content": "This is my first post!",
   "image": "https://example.com/image.jpg"
 }
-```
 
-**Response:**
-```json
+
+Response
+
 {
   "success": true,
   "data": {
@@ -228,17 +303,17 @@ Authorization: Bearer <token>
     "createdAt": "2025-12-04T10:00:00.000Z"
   }
 }
-```
 
-### Activity Wall
-**Request:**
-```json
+📜 Activity Wall
+
+Request
+
 GET /api/activities?page=1&limit=20
 Authorization: Bearer <token>
-```
 
-**Response:**
-```json
+
+Response
+
 {
   "success": true,
   "count": 20,
@@ -258,96 +333,141 @@ Authorization: Bearer <token>
     }
   ]
 }
-```
 
-## Authentication
+Authentication
 
 All protected routes require a JWT token in the Authorization header:
-```
+
 Authorization: Bearer <your_jwt_token>
-```
 
-## User Roles
+User Roles
 
-1. **User (default):** Can create posts, like, follow, block users
-2. **Admin:** User capabilities + delete users/posts/likes
-3. **Owner:** Admin capabilities + create/remove admins
+User (default):
 
-## Security Features
+Create posts, like posts
 
-- Password hashing with bcryptjs
-- JWT token-based authentication
-- Role-based authorization
-- Input validation
-- Error handling middleware
-- Blocked user privacy (posts not visible)
+Follow/unfollow
 
-## Database Models
+Block/unblock users
 
-### User Schema
-- username, email, password
-- bio, profilePicture
-- role (user/admin/owner)
-- followers, following, blockedUsers arrays
-- isActive flag
+Admin:
 
-### Post Schema
-- author (User reference)
-- content, image
-- likes array, likesCount
-- isDeleted flag, deletedBy, deletedAt
+All user capabilities
 
-### Activity Schema
-- type (post_created, post_liked, user_followed, etc.)
-- actor (User reference)
-- target (Post/User reference)
-- message, metadata
-- Auto-expires after 30 days
+Delete users (soft delete; cannot delete admins/owner)
 
-## Development
+Delete posts (soft delete)
 
-Run in development mode with auto-restart:
-```bash
-yarn dev
-```
+Remove likes
 
-## Environment Variables
+Owner:
 
-Required variables in `.env`:
-```
-PORT=5000
-NODE_ENV=development
-MONGODB_URI=mongodb://localhost:27017/social-media-app
-JWT_SECRET=your_secret_key
-JWT_EXPIRE=7d
-```
+All admin capabilities
 
-## Error Handling
+Create and remove admins
 
-The API uses consistent error responses:
-```json
+View all admins
+
+Note: The first owner is typically created manually (e.g., via database update).
+
+Security Features
+
+Password hashing using bcryptjs
+
+JWT-based authentication
+
+Role-based authorization for protected routes
+
+Consistent error handling
+
+Block system:
+
+Blocked users cannot see each other’s content or interact
+
+Soft delete for:
+
+Users (isActive flag)
+
+Posts (isDeleted, deletedBy, deletedAt)
+
+Database Models (Overview)
+👤 User Schema
+
+username, email, password
+
+bio, profilePicture
+
+role: user | admin | owner
+
+followers: [ObjectId<User>]
+
+following: [ObjectId<User>]
+
+blockedUsers: [ObjectId<User>]
+
+isActive: Boolean
+
+Timestamps: createdAt, updatedAt
+
+📝 Post Schema
+
+author: ObjectId<User>
+
+content, image
+
+likes: [ObjectId<User>]
+
+likesCount: Number
+
+isDeleted: Boolean
+
+deletedBy: ObjectId<User> (admin/owner)
+
+deletedAt: Date
+
+Timestamps: createdAt, updatedAt
+
+📜 Activity Schema
+
+type: e.g. post_created, post_liked, user_followed, user_deleted, post_deleted
+
+actor: ObjectId<User>
+
+target: ObjectId<User | Post>
+
+targetModel: "User" or "Post"
+
+message: String
+
+metadata: Object (optional extra details)
+
+Auto-expiration (e.g. after 30 days, if configured)
+
+Timestamps: createdAt, updatedAt
+
+Error Handling
+
+All errors follow a consistent JSON format:
+
 {
   "success": false,
   "message": "Error message here"
 }
-```
 
-## Notes
+Notes
 
-- First user can be promoted to owner manually in database
-- Activities auto-delete after 30 days (configurable)
-- Soft delete for users (isActive flag)
-- Soft delete for posts (isDeleted flag)
-- Blocked users cannot see each other's content
-- Admins cannot delete other admins (only owner can)
+The first owner can be created manually by changing a user’s role to "owner" in the database.
 
-## License
+Activities can be configured to auto-delete after 30 days.
+
+Soft delete is used instead of hard delete for users and posts.
+
+Blocked users are fully isolated from each other’s content.
+
+License
 
 ISC
 
-## Author
+Author
 
-Your Name
-#   s o c i a l - a c t i v i t y 
- 
- 
+Mitanshu Agrawal
